@@ -1,5 +1,7 @@
 (ns earth-vr.core
-  (:require ))
+  (:require [cljsjs.three]
+            [earth-vr.canvas :as c])
+  )
 
 (enable-console-print!)
 
@@ -15,3 +17,7 @@
   ;; your application
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
 )
+
+(def canvas (c/make))
+
+(js/console.log "CANVAS:" canvas)
