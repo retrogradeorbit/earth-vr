@@ -21,14 +21,10 @@
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
 )
 
-(defonce canvas (c/make))
+(defonce canvas (c/init))
 
-(defonce scene (js/THREE.Scene.))
-(defonce camera
-  (let [cam (js/THREE.PerspectiveCamera.
-             75 (/ (.-innerWidth js/window) (.-innerHeight js/window)) 1 10000)]
-    (set! (.-position.z cam) 1000)
-    cam))
+(def scene (:scene canvas))
+(def camera (:camera canvas))
 
 (defonce box (js/THREE.BoxGeometry. 400 400 400))
 (defonce material (js/THREE.MeshBasicMaterial. #js {"color" 0xffffff "wireframe" true}))
@@ -50,7 +46,6 @@
         (set! (.-rotation.x mesh) x)
         (set! (.-rotation.y mesh) y)
 
-        (.render (:renderer canvas) scene camera)
         (<! (e/next-frame))
 
-        (recur (+ 0.01 x) (+ 0.02 y))))))
+        (recur (+ 0.002 x) (+ 0.005 y))))))

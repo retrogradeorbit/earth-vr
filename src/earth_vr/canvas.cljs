@@ -47,3 +47,37 @@
      :canvas actual-canvas})
 
   )
+
+(defn init
+  []
+  (let [{:keys [renderer] :as world} (make)
+        scene (js/THREE.Scene.)
+        camera (let [cam (js/THREE.PerspectiveCamera.
+                          75 (/ (.-innerWidth js/window) (.-innerHeight js/window)) 1 10000)]
+                 (set! (.-position.z cam) 1000)
+                 cam)]
+    (.render renderer scene camera)
+
+    (let [
+          render-fn #(.render renderer scene camera)
+          resize-fn (fn [width height]
+                      (.setSize renderer width height)
+                      )
+          expand-fn #(resize-fn (.-innerWidth js/window)
+                                (.-innerHeight js/window))]
+      ;; setup render loop
+      (defn render []
+        (events/request-animation-frame render)
+        (render-fn))
+
+      (render)
+
+      (let [canvas (into world
+                         {:scene scene
+                          :camera camera
+                          :render-fn render-fn
+                          :resize-fn resize-fn
+                                        ;:fullscreen-fn fullscreen-fn
+                          :expand-fn expand-fn})]
+        (set-default-once! canvas)
+        canvas))))
