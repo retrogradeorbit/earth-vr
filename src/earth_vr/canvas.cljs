@@ -58,8 +58,8 @@
         camera (let [cam (js/THREE.PerspectiveCamera.
                           75 (/ (.-innerWidth js/window) (.-innerHeight js/window)) 1 10000)]
                  (set! (.-position.z cam) 50)
-                 (set! (.-position.y cam) -20)
-                 (set! (.-rotation.x cam) 0.4)
+                 (set! (.-position.y cam) 10)
+                 (set! (.-rotation.x cam) -0.2)
                  cam)
 
         ;controls (js/THREE.OrbitControls. camera (.-domElement renderer))

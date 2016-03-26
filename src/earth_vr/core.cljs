@@ -43,7 +43,7 @@
 (defonce mesh (js/THREE.Mesh. geom material))
 
 (defonce light (js/THREE.DirectionalLight. 0xffffff 1))
-(defonce ambient (js/THREE.AmbientLight. 0x202020 0.5))
+(defonce ambient (js/THREE.AmbientLight. 0x101010 0.5))
 
 (defonce environ (js/THREE.SphereGeometry. 500 16 16))
 (defonce environ-material (js/THREE.MeshBasicMaterial.))
@@ -73,7 +73,7 @@
     (js/console.log "CAMERA:" camera)
     (js/console.log "MATERIAL:" material)
 
-    (.set (.-position light) -400 0 100)
+    (.set (.-position light) -300 0 100)
     (.add scene light)
     (.add scene ambient)
 
