@@ -2,7 +2,9 @@
   (:require [infinitelives.utils.events :as events]
             [infinitelives.utils.dom :as dom]
             [infinitelives.utils.console :refer [log]]
-            [cljsjs.three]))
+            [cljsjs.three]
+            [cljs.core.async :refer [<!]])
+  (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (def canvas-store (atom {}))
 
@@ -62,9 +64,19 @@
           render-fn #(.render renderer scene camera)
           resize-fn (fn [width height]
                       (.setSize renderer width height)
+                      (set! (.-aspect camera) (/ width height))
+                      (.updateProjectionMatrix camera)
                       )
           expand-fn #(resize-fn (.-innerWidth js/window)
-                                (.-innerHeight js/window))]
+                                (.-innerHeight js/window))
+
+          resizer-loop
+          (when true (let [c (events/new-resize-chan)]
+                       (go (while true
+                             (let [[width height] (<! c)]
+                               (resize-fn width height)
+                               (render-fn))))))
+          ]
       ;; setup render loop
       (defn render []
         (events/request-animation-frame render)

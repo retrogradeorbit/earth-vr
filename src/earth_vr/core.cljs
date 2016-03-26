@@ -23,8 +23,8 @@
 
 (defonce canvas (c/init))
 
-(def scene (:scene canvas))
-(def camera (:camera canvas))
+(defonce scene (:scene canvas))
+(defonce camera (:camera canvas))
 
 (defonce box (js/THREE.BoxGeometry. 400 400 400))
 (defonce material (js/THREE.MeshBasicMaterial. #js {"color" 0xffffff "wireframe" true}))
@@ -32,20 +32,19 @@
 (defonce mesh (js/THREE.Mesh. box material))
 
 (defonce mainline
-  (do
+  (go
     (js/console.log "CANVAS:" canvas)
     (js/console.log "SCENE:" scene)
     (js/console.log "CAMERA:" camera)
     (js/console.log "BOX:" box)
     (js/console.log "MATERIAL:" material)
 
-    (go
-      (.add scene mesh)
+    (.add scene mesh)
 
-      (loop [x 0 y 0]
-        (set! (.-rotation.x mesh) x)
-        (set! (.-rotation.y mesh) y)
+    (loop [x 0 y 0]
+      (set! (.-rotation.x mesh) x)
+      (set! (.-rotation.y mesh) y)
 
-        (<! (e/next-frame))
+      (<! (e/next-frame))
 
-        (recur (+ 0.002 x) (+ 0.005 y))))))
+      (recur (+ 0.002 x) (+ 0.005 y)))))
