@@ -57,6 +57,15 @@
 (set! (.-specular material) (js/THREE.Color. "grey"))
 (set! (.-emissiveMap material) (js/THREE.ImageUtils.loadTexture "img/lights.jpg"))
 
+(defonce clouds (js/THREE.SphereGeometry. 20.05 48 48))
+(defonce cloud-material (js/THREE.MeshPhongMaterial.
+                   #js {"map" (js/THREE.ImageUtils.loadTexture "img/clouds.png")
+                        "opacity" 0.8
+                        "transparent" true
+                        "depthWrite" false}))
+(defonce cloud-mesh (js/THREE.Mesh. clouds cloud-material))
+(.add mesh cloud-mesh)
+
 (defonce mainline
   (go
     (js/console.log "CANVAS:" canvas)
@@ -75,10 +84,11 @@
 
     (.add scene environ-mesh)
 
-    (loop [x 0 y 0]
+    (loop [x 0 y 0 c 0]
       (set! (.-rotation.x mesh) x)
       (set! (.-rotation.y mesh) y)
+      (set! (.-rotation.y cloud-mesh) c)
 
       (<! (e/next-frame))
 
-      (recur x (+ 0.001 y)))))
+      (recur x (+ 0.002 y) (+ 0.001 c)))))
