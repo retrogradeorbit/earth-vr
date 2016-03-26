@@ -27,19 +27,53 @@
 (defonce camera (:camera canvas))
 
 (defonce box (js/THREE.BoxGeometry. 400 400 400))
-(defonce material (js/THREE.MeshBasicMaterial. #js {"color" 0xffffff "wireframe" true}))
 
-(defonce mesh (js/THREE.Mesh. box material))
+(defonce geom (js/THREE.SphereGeometry. 20 48 48))
+
+;(defonce material (js/THREE.MeshBasicMaterial. #js {"color" 0xffffff "wireframe" true}))
+(defonce material (js/THREE.MeshPhongMaterial.
+                   #js {"color" 0xffffff
+                        "specular" 0x808080
+                        "shininess" 10.
+                        "emissive" 0xffffff
+;                        "emissiveIntensity" 0.2
+                        }))
+(defonce texture (js/THREE.ImageUtils.loadTexture "img/earth.jpg"))
+
+(defonce mesh (js/THREE.Mesh. geom material))
+
+(defonce light (js/THREE.DirectionalLight. 0xffffff 1))
+(defonce ambient (js/THREE.AmbientLight. 0x202020 0.5))
+
+(defonce environ (js/THREE.SphereGeometry. 500 16 16))
+(defonce environ-material (js/THREE.MeshBasicMaterial.))
+(set! (.-map environ-material) (js/THREE.ImageUtils.loadTexture "img/stars.png"))
+(set! (.-side environ-material) js/THREE.BackSide)
+(defonce environ-mesh (js/THREE.Mesh. environ environ-material))
+
+(set! (.-bumpMap material) (js/THREE.ImageUtils.loadTexture "img/bump.jpg"))
+(set! (.-bumpScale material) 0.4)
+(set! (.-specularMap material) (js/THREE.ImageUtils.loadTexture "img/specular.jpg"))
+(set! (.-specular material) (js/THREE.Color. "grey"))
+(set! (.-emissiveMap material) (js/THREE.ImageUtils.loadTexture "img/lights.jpg"))
 
 (defonce mainline
   (go
     (js/console.log "CANVAS:" canvas)
     (js/console.log "SCENE:" scene)
     (js/console.log "CAMERA:" camera)
-    (js/console.log "BOX:" box)
     (js/console.log "MATERIAL:" material)
 
+    (.set (.-position light) -400 0 100)
+    (.add scene light)
+    (.add scene ambient)
+
+    (set! (.-map material) texture)
+
     (.add scene mesh)
+
+
+    (.add scene environ-mesh)
 
     (loop [x 0 y 0]
       (set! (.-rotation.x mesh) x)
@@ -47,4 +81,4 @@
 
       (<! (e/next-frame))
 
-      (recur (+ 0.002 x) (+ 0.005 y)))))
+      (recur x (+ 0.001 y)))))
