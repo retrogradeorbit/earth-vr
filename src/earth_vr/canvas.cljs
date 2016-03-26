@@ -37,6 +37,10 @@
     (.setSize renderer
               (.-innerWidth js/window)
               (.-innerHeight js/window))
+    (dom/set-style! actual-canvas
+                    :left 0
+                    :top 0
+                    :position "absolute")
     (dom/append! (.-body js/document) actual-canvas)
     {
      :renderer renderer

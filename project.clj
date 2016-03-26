@@ -11,7 +11,9 @@
                  [org.clojure/core.async "0.2.374"
                   :exclusions [org.clojure/tools.reader]]
                  [cljsjs/three "0.0.72-0"]
-                 [infinitelives.utils/infinitelives.utils "0.1.0-SNAPSHOT"]]
+                 [infinitelives.utils/infinitelives.utils "0.1.0-SNAPSHOT"]
+                 [infinitelives.pixi/infinitelives.pixi "0.1.0-SNAPSHOT"]
+                 ]
 
   :plugins [[lein-figwheel "0.5.2"]
             [lein-cljsbuild "1.1.3" :exclusions [[org.clojure/clojure]]]]
