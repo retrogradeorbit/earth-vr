@@ -39,9 +39,9 @@
                ;; lein cljsbuild once min
                {:id "min"
                 :source-paths ["src"]
-                :compiler {:output-to "resources/public/js/compiled/earth_vr.js"
+                :compiler {:output-to "build/js/compiled/earth_vr.js"
                            :main earth-vr.core
-                           :optimizations :advanced
+                           :optimizations :whitespace ;;:advanced
                            :pretty-print false}}]}
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
