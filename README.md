@@ -4,7 +4,7 @@ A VR rendition of mother earth done in browser with clojurescript and THREE.js
 
 ## Overview
 
-[Watch it!](https://retrogradeorbit.github.io/moonhenge/)
+[Watch it!](https://retrogradeorbit.github.io/earth-vr/)
 
 ![Screenshot](./screenshot.png)
 
