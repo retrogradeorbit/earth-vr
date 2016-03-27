@@ -45,7 +45,7 @@
 (defonce light (js/THREE.DirectionalLight. 0xffffff 1))
 (defonce ambient (js/THREE.AmbientLight. 0x101010 0.5))
 
-(defonce environ (js/THREE.SphereGeometry. 500 16 16))
+(defonce environ (js/THREE.SphereGeometry. 1000 16 16))
 (defonce environ-material (js/THREE.MeshBasicMaterial.))
 (set! (.-map environ-material) (js/THREE.ImageUtils.loadTexture "img/stars.png"))
 (set! (.-side environ-material) js/THREE.BackSide)
