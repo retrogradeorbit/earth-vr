@@ -1,10 +1,14 @@
 # earth-vr
 
-FIXME: Write a one-line description of your library/project.
+A VR rendition of mother earth done in browser with clojurescript and THREE.js
 
 ## Overview
 
-FIXME: Write a paragraph about the library/project and highlight its goals.
+[Watch it!](https://retrogradeorbit.github.io/moonhenge/)
+
+![Screenshot](./screenshot.png)
+
+Textures come from [planelpixelemporium.com](http://planetpixelemporium.com/earth.html)
 
 ## Setup
 
@@ -30,10 +34,14 @@ To create a production build run:
     lein do clean, cljsbuild once min
 
 And open your browser in `resources/public/index.html`. You will not
-get live reloading, nor a REPL. 
+get live reloading, nor a REPL.
+
+## TODO
+
+Haven't yet implemented web-vr split vision and head tracking.
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2016 FIXME
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
