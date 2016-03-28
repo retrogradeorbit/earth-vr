@@ -75,9 +75,9 @@
     (.render renderer scene camera)
 
     (let [
-          render-fn #(.render renderer scene camera)
+          render-fn-plain #(.render renderer scene camera)
 
-          render-fn-2
+          render-fn
           #(do
              (.updateMatrixWorld scene)
              (.updateMatrixWorld camera)
@@ -90,6 +90,7 @@
 
                (let [
                      width (.-innerWidth js/window)
+                     half-width (/ width 2)
                      height (.-innerHeight js/window)
 
                      fov (->
@@ -136,15 +137,15 @@
                  (-> camera-r .-quaternion (.copy quat))
                  (-> camera-r (.translateX (- (/ separation 2.0))))
 
-                 (.setViewport renderer 0 0 (* 2 width) height)
+                 (set! (.-autoClear renderer) false)
+
+                 (.setViewport renderer 0 0 width height)
                  (.clear renderer)
 
-                 (js/console.log "camera-l" (str camera-l))
-                 (.setViewport renderer 0 0 width height)
+                 (.setViewport renderer 0 0 half-width height)
                  (.render renderer scene camera-l)
 
-                 (js/console.log "camera-r" (str camera-r))
-                 (.setViewport renderer width 0 width height)
+                 (.setViewport renderer half-width 0 half-width height)
                  (.render renderer scene camera-r))))
 
           resize-fn (fn [width height]
